@@ -11,10 +11,13 @@ fi
 
 export DEBIAN_FRONTEND=noninteractive
 
+# ===== 第 1 步：安装 curl =====
+# reinstall 网络安装的 Debian 默认没有 curl
 apt update
+apt install -y curl
 
-# ===== 软件清单（待补充）=====
+# ===== 第 2 步：换源 =====
+# 使用 linuxmirrors.cn 交互式换源
+bash <(curl -sSL https://linuxmirrors.cn/main.sh)
 
-# apt install -y <pkg>
-
-echo "安装完成"
+echo "curl 安装 + 换源完成"

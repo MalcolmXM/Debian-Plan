@@ -10,8 +10,15 @@
 
 ## 软件清单
 
-（待补充）
+- `curl` — 网络安装的 Debian 默认没有，后续换源脚本也依赖它
 
 ## 配置步骤
 
-（待补充）
+1. **安装 curl**
+   ```bash
+   apt update && apt install -y curl
+   ```
+2. **换源**（linuxmirrors.cn 交互式）
+   ```bash
+   bash <(curl -sSL https://linuxmirrors.cn/main.sh)
+   ```
