@@ -11,6 +11,7 @@
 ## 软件清单
 
 - `curl` — 网络安装的 Debian 默认没有，后续换源脚本也依赖它
+- `docker` — 通过 linuxmirrors.cn 一键安装并配置镜像源
 
 ## 配置步骤
 
@@ -21,4 +22,8 @@
 2. **换源**（linuxmirrors.cn 交互式）
    ```bash
    bash <(curl -sSL https://linuxmirrors.cn/main.sh)
+   ```
+3. **安装 Docker + 配置 Docker 源**
+   ```bash
+   bash <(curl -sSL https://linuxmirrors.cn/docker.sh)
    ```

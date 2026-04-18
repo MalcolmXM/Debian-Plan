@@ -20,4 +20,7 @@ apt install -y curl
 # 使用 linuxmirrors.cn 交互式换源
 bash <(curl -sSL https://linuxmirrors.cn/main.sh)
 
-echo "curl 安装 + 换源完成"
+# ===== 第 3 步：安装 Docker 并配置 Docker 源 =====
+bash <(curl -sSL https://linuxmirrors.cn/docker.sh)
+
+echo "curl 安装 + 换源 + Docker 完成"
