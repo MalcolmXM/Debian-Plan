@@ -10,10 +10,18 @@
 
 ## 软件清单
 
+### 基础 / 第一阶段（`install.sh`）
+
 - `curl` — 网络安装的 Debian 默认没有，后续换源脚本也依赖它
 - `docker` — 通过 linuxmirrors.cn 一键安装并配置镜像源
 
+### 常用软件（`apps.sh`）
+
+（待补充）
+
 ## 配置步骤
+
+### 第一阶段：基础环境（`install.sh`）
 
 1. **安装 curl**
    ```bash
@@ -27,3 +35,7 @@
    ```bash
    bash <(curl -sSL https://linuxmirrors.cn/docker.sh)
    ```
+
+### 第二阶段：常用软件（`apps.sh`）
+
+（待补充）
