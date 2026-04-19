@@ -10,13 +10,36 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+: "${ACME_EMAIL:?请设置 ACME_EMAIL 环境变量}"
+: "${SERVER_IP:?请设置 SERVER_IP 环境变量（公网 IP）}"
+
 # ===== 第 1 步：安装 acme.sh =====
-# curl https://get.acme.sh | sh -s email=<your-email>
+if ! command -v acme.sh >/dev/null 2>&1 && [[ ! -f "$HOME/.acme.sh/acme.sh" ]]; then
+    curl https://get.acme.sh | sh -s "email=${ACME_EMAIL}"
+fi
 
-# ===== 第 2 步：签发 IP 证书 =====
-# 待补充：签发方式（standalone / webroot / dns）与 IP
+ACME="$HOME/.acme.sh/acme.sh"
 
-# ===== 第 3 步：自动续期 =====
-# acme.sh 默认安装 cron，无需额外配置
+# 默认 CA 设为 Let's Encrypt
+"$ACME" --set-default-ca --server letsencrypt
 
-echo "IP 证书配置完成"
+# ===== 第 2 步：签发 IP 证书（standalone 模式占用 80 端口）=====
+# 签发前确认 80 端口未被占用
+if ss -ltn | awk '{print $4}' | grep -qE ':80$'; then
+    echo "80 端口已被占用，请先停止相关服务" >&2
+    exit 1
+fi
+
+"$ACME" --issue --standalone -d "$SERVER_IP"
+
+# ===== 第 3 步：安装证书到固定路径 =====
+install -d /etc/ssl/ipcert
+"$ACME" --install-cert -d "$SERVER_IP" \
+    --key-file       /etc/ssl/ipcert/key.pem \
+    --fullchain-file /etc/ssl/ipcert/fullchain.pem \
+    --reloadcmd      "echo '证书已更新：'$(date)"
+
+# ===== 第 4 步：自动续期 =====
+# acme.sh 安装时已写入 cron，无需额外配置
+
+echo "IP 证书配置完成：/etc/ssl/ipcert/"

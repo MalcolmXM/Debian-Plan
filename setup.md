@@ -46,8 +46,14 @@
 
 ### 第三阶段：IP 证书（`cert.sh`）
 
-1. 安装 `acme.sh`
-2. 用 Let's Encrypt 为公网 IP 签发证书（6 天有效期）
-3. 依赖 `acme.sh` 自带 cron 自动续期
+签发方式：**standalone**（临时占用 80 端口），需保证运行时 80 空闲。
 
-（签发方式 standalone / webroot / DNS 待定）
+```bash
+sudo ACME_EMAIL=you@example.com SERVER_IP=1.2.3.4 ./cert.sh
+```
+
+1. 安装 `acme.sh`（带邮箱注册）
+2. 默认 CA 设为 Let's Encrypt
+3. 检查 80 端口空闲后 `--issue --standalone -d <IP>`
+4. 证书安装到 `/etc/ssl/ipcert/{fullchain,key}.pem`
+5. `acme.sh` 自带 cron 自动续期
