@@ -19,6 +19,10 @@
 
 （待补充）
 
+### IP 证书（`cert.sh`）
+
+- `acme.sh` — 签发 Let's Encrypt 短期 IP 证书（6 天有效期），自带 cron 自动续期
+
 ## 配置步骤
 
 ### 第一阶段：基础环境（`install.sh`）
@@ -39,3 +43,11 @@
 ### 第二阶段：常用软件（`apps.sh`）
 
 （待补充）
+
+### 第三阶段：IP 证书（`cert.sh`）
+
+1. 安装 `acme.sh`
+2. 用 Let's Encrypt 为公网 IP 签发证书（6 天有效期）
+3. 依赖 `acme.sh` 自带 cron 自动续期
+
+（签发方式 standalone / webroot / DNS 待定）
